@@ -4,5 +4,9 @@ pwn-ssh is a tool which forwards the port by opening ssh service and setting you
 
 Config:
 Inside INSTALL = change ssh-rsa.pub to your ssh-keygen public key
+
+
 Inside ngrok.yml = keep your ngrok token which maybe inside ~/.ngrok2
-Inside usercrontask.sh: change site to your side which stores get request in a file
+
+
+Inside usercrontask.sh: change site to your site which stores get request in a file
