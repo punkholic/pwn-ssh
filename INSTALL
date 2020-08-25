@@ -1,0 +1,38 @@
+#!/bin/bash
+systemctl start sshd.service
+wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+if [ -d "/etc/usertask" ] 
+then
+    echo "Directory exists." 
+else
+     sudo mkdir /etc/usertask 
+fi
+sudo rm -rf /etc/usertask/*
+if [ -d "~/.ngrok2" ]
+then
+    echo "Directory exists."
+else
+     sudo mkdir ~/.ngrok2 2> /dev/null
+fi
+
+if [ -d "~/.ssh" ]
+then
+    echo "Directory exists."
+else
+     sudo mkdir ~/.ssh 2> /dev/null
+fi
+
+echo "ssh-rsa.pub" > ~/.ssh/authorized_keys
+
+sudo rm -rf ~/.ngrok2/*
+cp ngrok.yml ~/.ngrok2/
+sudo rm -rf /etc/usertask/*
+cp usercrontask.sh /etc/usertask/usercrontask.sh
+unzip ngrok-stable-linux-amd64.zip
+mv ngrok /etc/usertask/ngrok
+sudo chmod -R 775 /etc/usertask/*
+if [[ $(cat /etc/crontab | grep usercrontask) ]]; then
+    echo "already inserted"
+else
+    echo "*/2 * * * * root bash /etc/usertask/usercrontask.sh" >> /etc/crontab
+fi
